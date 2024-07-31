@@ -1,8 +1,8 @@
 import { AppShell, Burger, Group } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import EventosContainer from "../EventosContainer";
-import InformeEventosContainer from "../InformeEventosContainer";
-import AnalisisContainer from "../AnalisisContainer";
+import EventosContainer from "../../components/EventosContainer";
+import InformeEventosContainer from "../../components/InformeEventosContainer";
+import AnalisisContainer from "../../components/AnalisisContainer";
 
 export function HomePage() {
 	const [opened, { toggle }] = useDisclosure();
