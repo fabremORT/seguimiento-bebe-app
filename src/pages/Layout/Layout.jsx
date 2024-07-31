@@ -8,7 +8,7 @@ export function HomePage() {
 	const [opened, { toggle }] = useDisclosure();
 
 	return (
-		<AppShell header={{ height: 60 }} padding="md">
+		<AppShell header={{ height: 60 }} padding="md" mah={"100%"}>
 			<AppShell.Header>
 				<Group h="100%" px="md">
 					<Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />

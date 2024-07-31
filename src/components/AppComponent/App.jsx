@@ -6,7 +6,11 @@ import Layout from "../../pages/Layout";
 
 function App() {
 	return (
-		<div>
+		<div
+			style={{
+				height: "100%",
+			}}
+		>
 			<Routes>
 				<Route path="/login" element={<LoginPage />} />
 				<Route path="/" element={<Layout />} />
