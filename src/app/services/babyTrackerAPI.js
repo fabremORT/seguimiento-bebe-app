@@ -8,8 +8,8 @@ export const babyTrackerApi = createApi({
 		prepareHeaders: (headers, { getState }) => {
 			// By default, if we have a token in the store, let's use that for authenticated requests
 			const token = getState().auth.token;
+			const userId = getState().auth.userId;
 			if (token) {
-				const userId = getState().user.id;
 				headers.set("apikey", `${token}`);
 				headers.set("iduser", `${userId}`);
 			}

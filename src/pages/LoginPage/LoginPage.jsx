@@ -1,26 +1,55 @@
 import { Button, Card, Group, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
+import { setCredentials } from "../../features/auth/authSlice";
+import { useLoginMutation } from "../../app/services/babyTrackerAPI";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { notifications } from "@mantine/notifications";
+
+const LoginCardStyles = {
+	width: "30%",
+};
+
+const FormStyles = {
+	height: "100%",
+};
 
 const LoginPage = () => {
 	const [isFormValid, setIsFormValid] = useState(false);
+	const [login, { isLoading }] = useLoginMutation();
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-	const LoginCardStyles = {
-		width: "30%",
-	};
+	const _handleLogin = async (credentials) => {
+		try {
+			const { data, error } = await login(credentials);
+			console.log(data);
+			console.log(error);
 
-	const FormStyles = {
-		height: "100%",
+			if (data) {
+				const { id, apiKey } = data;
+				dispatch(setCredentials({ id, apiKey }));
+				navigate("/");
+			} else {
+				notifications.show({
+					title: error.data.mensaje,
+					color: "red",
+				});
+			}
+		} catch (err) {
+			console.error(err);
+		}
 	};
 
 	const form = useForm({
 		initialValues: {
-			user: "",
+			usuario: "",
 			password: "",
 		},
 
 		validate: {
-			user: (value) => (value ? null : "Debe ingresar un usuario"),
+			usuario: (value) => (value ? null : "Debe ingresar un usuario"),
 			password: (value) => (value ? null : "Debe ingresar una contraseña"),
 		},
 	});
@@ -47,17 +76,18 @@ const LoginPage = () => {
 				style={LoginCardStyles}
 			>
 				<form
-					onSubmit={form.onSubmit((values) => console.log(values))}
+					onSubmit={form.onSubmit((values) => _handleLogin(values))}
 					style={FormStyles}
 				>
 					<TextInput
 						withAsterisk
 						label="Usuario"
-						key={form.key("user")}
-						{...form.getInputProps("user")}
+						key={form.key("usuario")}
+						{...form.getInputProps("usuario")}
 					/>
 
 					<TextInput
+						type="password"
 						withAsterisk
 						label="Contraseña"
 						key={form.key("password")}

@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group } from "@mantine/core";
+import { AppShell, Burger, Group, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import EventosContainer from "../../components/EventosContainer";
 import InformeEventosContainer from "../../components/InformeEventosContainer";
@@ -12,6 +12,7 @@ export function HomePage() {
 			<AppShell.Header>
 				<Group h="100%" px="md">
 					<Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+					<Text>Baby Tracker</Text>
 				</Group>
 			</AppShell.Header>
 			<AppShell.Main>
