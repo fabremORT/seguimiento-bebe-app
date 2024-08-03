@@ -3,6 +3,7 @@ import { useDisclosure } from "@mantine/hooks";
 import EventosContainer from "../../components/EventosContainer";
 import InformeEventosContainer from "../../components/InformeEventosContainer";
 import AnalisisContainer from "../../components/AnalisisContainer";
+import RegistrarEventoContainer from "../../components/RegistrarEventoContainer/RegistrarEventoContainer";
 
 export function Dashboard() {
 	const [opened, { toggle }] = useDisclosure();
@@ -16,6 +17,7 @@ export function Dashboard() {
 				</Group>
 			</AppShell.Header>
 			<AppShell.Main>
+				<RegistrarEventoContainer/>
 				<EventosContainer />
 				<InformeEventosContainer />
 				<AnalisisContainer />
