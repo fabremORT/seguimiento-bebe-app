@@ -4,7 +4,7 @@ import EventosContainer from "../../components/EventosContainer";
 import InformeEventosContainer from "../../components/InformeEventosContainer";
 import AnalisisContainer from "../../components/AnalisisContainer";
 
-export function HomePage() {
+export function Dashboard() {
 	const [opened, { toggle }] = useDisclosure();
 
 	return (
@@ -24,4 +24,4 @@ export function HomePage() {
 	);
 }
 
-export default HomePage;
+export default Dashboard;

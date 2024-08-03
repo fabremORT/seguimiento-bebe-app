@@ -24,8 +24,6 @@ const LoginPage = () => {
 	const _handleLogin = async (credentials) => {
 		try {
 			const { data, error } = await login(credentials);
-			console.log(data);
-			console.log(error);
 
 			if (data) {
 				const { id, apiKey } = data;
@@ -95,7 +93,7 @@ const LoginPage = () => {
 					/>
 
 					<Group justify="center" mt="md">
-						<Button type="submit" disabled={!isFormValid}>
+						<Button type="submit" disabled={!isFormValid} loading={isLoading}>
 							Iniciar
 						</Button>
 					</Group>

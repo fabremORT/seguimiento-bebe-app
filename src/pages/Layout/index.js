@@ -1,2 +1,2 @@
-import Layout from "./Layout";
-export default Layout;
+import Dashboard from "./Dashboard";
+export default Dashboard;

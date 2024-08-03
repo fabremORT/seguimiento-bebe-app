@@ -25,5 +25,6 @@ export const authSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { setCredentials, logout } = authSlice.actions;
+export const selectCurrentUser = (state) => state.auth;
 
 export default authSlice.reducer;
