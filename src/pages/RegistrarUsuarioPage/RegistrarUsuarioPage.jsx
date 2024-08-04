@@ -1,114 +1,97 @@
-import { Button, Card, Group, Select, TextInput } from "@mantine/core";
+import {
+	Button,
+	Card,
+	Group,
+	LoadingOverlay,
+	Select,
+	TextInput,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useEffect, useState } from "react";
+import {
+	useGetCiudadesByDeptoQuery,
+	useGetDepartamentosQuery,
+	useRegisterUserMutation,
+} from "../../app/services/babyTrackerAPI";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
+import { setCredentials } from "../../features/auth/authSlice";
+
+const LoginCardStyles = {
+	width: "30%",
+};
+
+const FormStyles = {
+	height: "100%",
+};
 
 const RegistrarUsuarioPage = () => {
-	const deptos = [
-		{
-			id: 3203,
-			nombre: "Flores",
-		},
-		{
-			id: 3204,
-			nombre: "San José",
-		},
-		{
-			id: 3205,
-			nombre: "Artigas",
-		},
-		{
-			id: 3206,
-			nombre: "Maldonado",
-		},
-		{
-			id: 3207,
-			nombre: "Rivera",
-		},
-		{
-			id: 3208,
-			nombre: "Colonia",
-		},
-		{
-			id: 3209,
-			nombre: "Durazno",
-		},
-		{
-			id: 3210,
-			nombre: "Río Negro",
-		},
-		{
-			id: 3211,
-			nombre: "Cerro Largo",
-		},
-		{
-			id: 3212,
-			nombre: "Paysandú",
-		},
-		{
-			id: 3213,
-			nombre: "Canelones",
-		},
-		{
-			id: 3214,
-			nombre: "Treinta y Tres",
-		},
-		{
-			id: 3215,
-			nombre: "Lavalleja",
-		},
-		{
-			id: 3216,
-			nombre: "Rocha",
-		},
-		{
-			id: 3217,
-			nombre: "Florida",
-		},
-		{
-			id: 3218,
-			nombre: "Montevideo",
-		},
-		{
-			id: 3219,
-			nombre: "Soriano",
-		},
-		{
-			id: 3220,
-			nombre: "Salto",
-		},
-		{
-			id: 3221,
-			nombre: "Tacuarembó",
-		},
-	];
+	const [selectedDepto, setSelectedDepto] = useState({ value: 0, label: "" });
 
-	const ciudades = [];
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 
-	const LoginCardStyles = {
-		width: "30%",
-	};
-
-	const FormStyles = {
-		height: "100%",
-	};
+	const { data: deptos = [], isLoading: isLoadingDeptos } =
+		useGetDepartamentosQuery();
+	const { data: ciudades = [], isLoading: isLoadingCiudades } =
+		useGetCiudadesByDeptoQuery(Number(selectedDepto.value));
+	const [registerUser, { isLoading: isLoadingRegisterUser }] =
+		useRegisterUserMutation();
 
 	const form = useForm({
 		initialValues: {
 			usuario: "",
 			password: "",
 			confirmPassword: "",
-			idDepartamento: 0,
-			idCiudad: 0,
+			idDepartamento: "",
+			idCiudad: "",
 		},
 
 		validate: {
 			usuario: (value) => (value ? null : "Debe ingresar un usuario"),
 			password: (value) => (value ? null : "Debe ingresar una contraseña"),
-			confirmPassword: (value) => (value ? null : "Repita su contraseña"),
+			confirmPassword: (value) => {
+				if (!value) {
+					return "Repita su contraseña";
+				} else if (value != form.values.password) {
+					return "Las contraseñas no coinciden";
+				}
+			},
 			idDepartamento: (value) =>
 				value ? null : "Debe ingresar un departamento",
 			idCiudad: (value) => (value ? null : "Debe ingresar una ciudad"),
 		},
 	});
+
+	const _handleDeptoChange = (value, option) => {
+		setSelectedDepto(option);
+		form.setFieldValue("idDepartamento", value);
+		form.setFieldValue("idCiudad", null);
+	};
+
+	const _handleUserSubmit = async (values) => {
+		try {
+			const { data, error } = await registerUser(values);
+
+			if (data) {
+				const { id, apiKey } = data;
+				dispatch(setCredentials({ id, apiKey }));
+				navigate("/");
+				notifications.show({
+					title: "Usuario registrado con exito!",
+					color: "green",
+				});
+			} else {
+				notifications.show({
+					title: error.data.mensaje,
+					color: "red",
+				});
+			}
+		} catch (err) {
+			console.error(err);
+		}
+	};
 
 	return (
 		<div
@@ -127,10 +110,12 @@ const RegistrarUsuarioPage = () => {
 				withBorder
 				style={LoginCardStyles}
 			>
-				<form
-					onSubmit={form.onSubmit((values) => console.log(values))}
-					style={FormStyles}
-				>
+				<LoadingOverlay
+					visible={isLoadingDeptos || isLoadingCiudades}
+					zIndex={1000}
+					overlayProps={{ radius: "sm", blur: 2 }}
+				/>
+				<form onSubmit={form.onSubmit(_handleUserSubmit)} style={FormStyles}>
 					<TextInput
 						withAsterisk
 						label="Usuario"
@@ -139,6 +124,7 @@ const RegistrarUsuarioPage = () => {
 					/>
 
 					<TextInput
+						type="password"
 						withAsterisk
 						label="Contraseña"
 						key={form.key("password")}
@@ -146,6 +132,7 @@ const RegistrarUsuarioPage = () => {
 					/>
 
 					<TextInput
+						type="password"
 						withAsterisk
 						label="Confirmar Contraseña"
 						key={form.key("confirmPassword")}
@@ -156,17 +143,23 @@ const RegistrarUsuarioPage = () => {
 						withAsterisk
 						label="Departamento"
 						placeholder="Elija un departamento"
+						key={form.key("idDepartamento")}
+						{...form.getInputProps("idDepartamento")}
 						data={deptos.map((depto) => {
 							return { value: depto.id.toString(), label: depto.nombre };
 						})}
+						value={selectedDepto.value}
+						onChange={_handleDeptoChange}
 					/>
 
 					<Select
 						withAsterisk
 						label="Ciudad"
 						placeholder="Elija una ciudad"
-						data={deptos.map((depto) => {
-							return { value: depto.id.toString(), label: depto.nombre };
+						key={form.key("idCiudad")}
+						{...form.getInputProps("idCiudad")}
+						data={ciudades.map((ciudad) => {
+							return { value: ciudad.id.toString(), label: ciudad.nombre };
 						})}
 					/>
 

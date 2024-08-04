@@ -37,9 +37,11 @@ export const babyTrackerApi = createApi({
 		}),
 		getDepartamentos: builder.query({
 			query: () => "departamentos.php",
+			transformResponse: (response, meta, arg) => response.departamentos,
 		}),
 		getCiudadesByDepto: builder.query({
-			query: (deptoId) => `departamentos.php?idDepartamento=${deptoId}`,
+			query: (deptoId) => `ciudades.php?idDepartamento=${deptoId}`,
+			transformResponse: (response, meta, arg) => response.ciudades,
 		}),
 		getEventosByUserId: builder.query({
 			query: (userId) => `eventos.php?idUsuario=${userId}`,
