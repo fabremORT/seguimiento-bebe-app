@@ -28,7 +28,7 @@ export function Dashboard() {
 						<AnalisisContainer />
 					</Grid.Col>
 				</Grid>
-				{/* <InformeEventosContainer /> */}
+				<InformeEventosContainer />
 
 			</AppShell.Main>
 		</AppShell>
