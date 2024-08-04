@@ -1,4 +1,4 @@
-import { AppShell, Burger, Group, Text } from "@mantine/core";
+import { AppShell, Burger, Grid, Group, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import EventosContainer from "../../components/EventosContainer";
 import InformeEventosContainer from "../../components/InformeEventosContainer";
@@ -17,10 +17,19 @@ export function Dashboard() {
 				</Group>
 			</AppShell.Header>
 			<AppShell.Main>
-				<RegistrarEventoContainer/>
-				<EventosContainer />
-				<InformeEventosContainer />
-				<AnalisisContainer />
+				<Grid>
+					<Grid.Col span={3}>
+						<RegistrarEventoContainer />
+					</Grid.Col>
+					<Grid.Col span={9}>
+						<EventosContainer />
+					</Grid.Col>
+					<Grid.Col span={12}>
+						<AnalisisContainer />
+					</Grid.Col>
+				</Grid>
+				{/* <InformeEventosContainer /> */}
+
 			</AppShell.Main>
 		</AppShell>
 	);

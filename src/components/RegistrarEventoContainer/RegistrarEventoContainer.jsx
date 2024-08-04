@@ -57,7 +57,7 @@ const RegistrarEventoContainer = () => {
 			radius="md"
 			withBorder
 			style={{
-				width:'30%'
+				height:400
 			}}
 		>
 			<h2>Registrar evento</h2>
