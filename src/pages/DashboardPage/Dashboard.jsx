@@ -1,4 +1,12 @@
-import { AppShell, Group, LoadingOverlay, Text, Title } from "@mantine/core";
+import {
+	ActionIcon,
+	AppShell,
+	Group,
+	LoadingOverlay,
+	Text,
+	Title,
+	Tooltip,
+} from "@mantine/core";
 import EventosContainer from "../../components/EventosContainer";
 import InformeEventos from "../../components/InformeEventos";
 import AnalisisContainer from "../../components/AnalisisContainer";
@@ -8,12 +16,16 @@ import { useAuth } from "../../hooks/authHook";
 import { useDispatch } from "react-redux";
 import { setEvents } from "../../features/events/eventSlice";
 import { useEffect } from "react";
+import { IconLogout2 } from "@tabler/icons-react";
+import { logout } from "../../features/auth/authSlice";
 
 export function Dashboard() {
 	const user = useAuth();
 	const dispatch = useDispatch();
 
 	const { data = [], isLoading } = useGetEventosByUserIdQuery(user.userId);
+
+	const _handleLogout = () => dispatch(logout());
 
 	useEffect(() => {
 		dispatch(setEvents(data));
@@ -22,8 +34,18 @@ export function Dashboard() {
 	return (
 		<AppShell header={{ height: 60 }} padding="md" mah={"100%"}>
 			<AppShell.Header>
-				<Group h="100%" px="md">
+				<Group h="100%" px="md" justify="space-between">
 					<Title order={1}>Baby Tracker</Title>
+					<Tooltip label="Cerrar sesion">
+						<ActionIcon
+							variant="subtle"
+							color="gray"
+							radius="xs"
+							onClick={_handleLogout}
+						>
+							<IconLogout2 />
+						</ActionIcon>
+					</Tooltip>
 				</Group>
 			</AppShell.Header>
 			<AppShell.Main>
