@@ -3,6 +3,7 @@ import { setupListeners } from "@reduxjs/toolkit/query";
 import { babyTrackerApi } from "./services/babyTrackerAPI";
 import authReducer from "../features/auth/authSlice";
 import eventsReducer from "../features/events/eventSlice";
+import unauthorizedMiddleware from "./middleware/unauthorizedMiddleware";
 
 export const store = configureStore({
 	reducer: {
@@ -13,7 +14,10 @@ export const store = configureStore({
 	// Adding the api middleware enables caching, invalidation, polling,
 	// and other useful features of `rtk-query`.
 	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware().concat(babyTrackerApi.middleware),
+		getDefaultMiddleware().concat(
+			babyTrackerApi.middleware,
+			unauthorizedMiddleware.middleware
+		),
 });
 
 // optional, but required for refetchOnFocus/refetchOnReconnect behaviors
