@@ -1,12 +1,13 @@
-import { AppShell, Group, LoadingOverlay, Text } from "@mantine/core";
+import { AppShell, Group, LoadingOverlay, Text, Title } from "@mantine/core";
 import EventosContainer from "../../components/EventosContainer";
-import InformeEventosContainer from "../../components/InformeEventosContainer";
+import InformeEventos from "../../components/InformeEventos";
 import AnalisisContainer from "../../components/AnalisisContainer";
 import RegistrarEventoContainer from "../../components/RegistrarEventoContainer/RegistrarEventoContainer";
 import { useGetEventosByUserIdQuery } from "../../app/services/babyTrackerAPI";
 import { useAuth } from "../../hooks/authHook";
 import { useDispatch } from "react-redux";
 import { setEvents } from "../../features/events/eventSlice";
+import { useEffect } from "react";
 
 export function Dashboard() {
 	const user = useAuth();
@@ -14,13 +15,15 @@ export function Dashboard() {
 
 	const { data = [], isLoading } = useGetEventosByUserIdQuery(user.userId);
 
-	dispatch(setEvents(data));
+	useEffect(() => {
+		dispatch(setEvents(data));
+	}, [data, dispatch]);
 
 	return (
 		<AppShell header={{ height: 60 }} padding="md" mah={"100%"}>
 			<AppShell.Header>
 				<Group h="100%" px="md">
-					<Text>Baby Tracker</Text>
+					<Title order={1}>Baby Tracker</Title>
 				</Group>
 			</AppShell.Header>
 			<AppShell.Main>
@@ -31,7 +34,7 @@ export function Dashboard() {
 				/>
 				<RegistrarEventoContainer />
 				<EventosContainer />
-				<InformeEventosContainer />
+				<InformeEventos />
 				<AnalisisContainer />
 			</AppShell.Main>
 		</AppShell>
