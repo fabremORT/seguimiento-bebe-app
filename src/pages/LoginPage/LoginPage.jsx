@@ -1,9 +1,9 @@
-import { Button, Card, Group, TextInput } from "@mantine/core";
+import { Button, Card, Group, Stack, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
 import { setCredentials } from "../../features/auth/authSlice";
 import { useLoginMutation } from "../../app/services/babyTrackerAPI";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { notifications } from "@mantine/notifications";
 
@@ -92,11 +92,14 @@ const LoginPage = () => {
 						{...form.getInputProps("password")}
 					/>
 
-					<Group justify="center" mt="md">
+					<Stack justify="center" align="center" mt="md">
 						<Button type="submit" disabled={!isFormValid} loading={isLoading}>
 							Iniciar
 						</Button>
-					</Group>
+						<Link to="/registerUser" replace={true}>
+							Registrarme
+						</Link>
+					</Stack>
 				</form>
 			</Card>
 		</div>

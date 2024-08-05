@@ -5,6 +5,7 @@ import {
 	LoadingOverlay,
 	Select,
 	TextInput,
+	Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
@@ -115,6 +116,11 @@ const RegistrarUsuarioPage = () => {
 					zIndex={1000}
 					overlayProps={{ radius: "sm", blur: 2 }}
 				/>
+				<Group justify="center">
+					<Title order={2} style={{ textAlign: "center" }}>
+						Registro de Usuario
+					</Title>
+				</Group>
 				<form onSubmit={form.onSubmit(_handleUserSubmit)} style={FormStyles}>
 					<TextInput
 						withAsterisk
