@@ -5,12 +5,16 @@ const initialState = {
 };
 
 export const eventSlice = createSlice({
-	name: "event",
+	name: "events",
 	initialState,
-	reducers: {},
+	reducers: {
+		setEvents: (state, { payload }) => {
+			state.events = payload;
+		},
+	},
 });
 
 // Action creators are generated for each case reducer function
-export const {} = counterSlice.actions;
+export const { setEvents } = eventSlice.actions;
 
 export default eventSlice.reducer;

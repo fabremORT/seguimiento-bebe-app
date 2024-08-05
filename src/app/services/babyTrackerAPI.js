@@ -16,6 +16,7 @@ export const babyTrackerApi = createApi({
 			return headers;
 		},
 	}),
+	tagTypes: ["Event"],
 	endpoints: (builder) => ({
 		login: builder.mutation({
 			query(body) {
@@ -45,6 +46,8 @@ export const babyTrackerApi = createApi({
 		}),
 		getEventosByUserId: builder.query({
 			query: (userId) => `eventos.php?idUsuario=${userId}`,
+			transformResponse: (response, meta, arg) => response.eventos,
+			providesTags: ["Event"],
 		}),
 		getCategorias: builder.query({
 			query: () => `categorias.php`,
@@ -60,6 +63,7 @@ export const babyTrackerApi = createApi({
 					body,
 				};
 			},
+			invalidatesTags: ["Event"],
 		}),
 		deleteEvento: builder.mutation({
 			query(eventId) {
@@ -68,6 +72,7 @@ export const babyTrackerApi = createApi({
 					method: "DELETE",
 				};
 			},
+			invalidatesTags: ["Event"],
 		}),
 	}),
 });
