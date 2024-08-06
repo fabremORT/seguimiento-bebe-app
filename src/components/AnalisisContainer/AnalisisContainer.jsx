@@ -1,5 +1,5 @@
 import { PieChart } from "@mantine/charts";
-import { Card, Grid } from "@mantine/core";
+import { Badge, Card, Grid } from "@mantine/core";
 
 const AnalisisContainer = () => {
 	const eventos = [
@@ -34,6 +34,12 @@ const AnalisisContainer = () => {
 					<div style={{display:'flex', alignItems:'center', flexDirection:"column"}}>
 						<h3>Cantidades por categoria</h3>
 						<PieChart data={eventos} withTooltip tooltipDataSource="segment" mx="auto" withLabelsLine labelsPosition="inside" labelsType="value" withLabels />
+					</div>
+				</Grid.Col>
+				<Grid.Col span={4}>
+				<div style={{display:'flex', alignItems:'center', flexDirection:"column"}}>
+						<h3>Tiempo para el próximo biberón</h3>
+						<Badge color="teal" radius="md" size="100px">3:59</Badge>
 					</div>
 				</Grid.Col>
 			</Grid>
