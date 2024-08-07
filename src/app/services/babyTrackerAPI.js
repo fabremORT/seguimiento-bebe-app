@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setCategories } from "../../features/masters/mastersSlice";
 
 // Define a service using a base URL and expected endpoints
 export const babyTrackerApi = createApi({
@@ -51,6 +52,15 @@ export const babyTrackerApi = createApi({
 		}),
 		getCategorias: builder.query({
 			query: () => `categorias.php`,
+			async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+				try {
+					const { data } = await queryFulfilled;
+					// Actualiza el estado con las categorias obtenidas
+					dispatch(setCategories(data.categorias));
+				} catch (error) {
+					console.error("Error fetching categories:", error);
+				}
+			},
 		}),
 		getPlazas: builder.query({
 			query: () => `plazas.php`,

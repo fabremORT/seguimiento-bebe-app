@@ -11,9 +11,12 @@ import EventosContainer from "../../components/EventosContainer";
 import InformeEventos from "../../components/InformeEventos";
 import AnalisisContainer from "../../components/AnalisisContainer";
 import RegistrarEventoContainer from "../../components/RegistrarEventoContainer/RegistrarEventoContainer";
-import { useGetEventosByUserIdQuery } from "../../app/services/babyTrackerAPI";
+import {
+	useGetCategoriasQuery,
+	useGetEventosByUserIdQuery,
+} from "../../app/services/babyTrackerAPI";
 import { useAuth } from "../../hooks/authHook";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setEvents } from "../../features/events/eventSlice";
 import { useEffect } from "react";
 import { IconLogout2 } from "@tabler/icons-react";
@@ -23,6 +26,7 @@ export function Dashboard() {
 	const user = useAuth();
 	const dispatch = useDispatch();
 
+	useGetCategoriasQuery();
 	const { data = [], isLoading } = useGetEventosByUserIdQuery(user.userId);
 
 	const _handleLogout = () => dispatch(logout());

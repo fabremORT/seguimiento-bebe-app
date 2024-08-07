@@ -1,40 +1,10 @@
 import { Button, Card, Group, Select, Textarea } from "@mantine/core";
-import { DateInput } from '@mantine/dates';
+import { DateInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
+import { useSelector } from "react-redux";
 
 const RegistrarEventoContainer = () => {
-	const categorias = [
-		{
-			"id": 31,
-			"tipo": "Comida",
-			"imagen": 1
-		},
-		{
-			"id": 32,
-			"tipo": "Paseo",
-			"imagen": 2
-		},
-		{
-			"id": 33,
-			"tipo": "Pañal",
-			"imagen": 3
-		},
-		{
-			"id": 34,
-			"tipo": "Sueño",
-			"imagen": 4
-		},
-		{
-			"id": 35,
-			"tipo": "Biberón",
-			"imagen": 5
-		},
-		{
-			"id": 36,
-			"tipo": "Juego",
-			"imagen": 6
-		}
-	]
+	const categorias = useSelector((state) => state.masters.categories);
 
 	const form = useForm({
 		initialValues: {
@@ -45,8 +15,7 @@ const RegistrarEventoContainer = () => {
 
 		validate: {
 			fecha: (value) => (value ? null : "Debe ingresar una fecha"),
-			idCategoria: (value) =>
-				value ? null : "Debe ingresar una categoria",
+			idCategoria: (value) => (value ? null : "Debe ingresar una categoria"),
 		},
 	});
 
@@ -57,7 +26,7 @@ const RegistrarEventoContainer = () => {
 			radius="md"
 			withBorder
 			style={{
-				height:400
+				height: 400,
 			}}
 		>
 			<h2>Registrar evento</h2>
@@ -65,7 +34,7 @@ const RegistrarEventoContainer = () => {
 				<Select
 					label="Categoria"
 					placeholder="Elija una categoria"
-					data={categorias.map((cat) => {
+					data={categorias?.map((cat) => {
 						return { value: cat.id.toString(), label: cat.tipo };
 					})}
 				/>
@@ -75,10 +44,7 @@ const RegistrarEventoContainer = () => {
 					placeholder="Elija una fecha"
 					maxDate={new Date()}
 				/>
-				<Textarea
-					label="Detalles"
-					placeholder="Ingrese detalles"
-				/>
+				<Textarea label="Detalles" placeholder="Ingrese detalles" />
 
 				<Group justify="center" mt="md">
 					<Button type="submit">Registrar</Button>
