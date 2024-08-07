@@ -16,7 +16,7 @@ import {
 	useGetEventosByUserIdQuery,
 } from "../../app/services/babyTrackerAPI";
 import { useAuth } from "../../hooks/authHook";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setEvents } from "../../features/events/eventSlice";
 import { useEffect } from "react";
 import { IconLogout2 } from "@tabler/icons-react";

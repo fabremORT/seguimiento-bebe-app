@@ -1,5 +1,6 @@
 import { LineChart, PieChart } from "@mantine/charts";
 import { Badge, Card, Grid } from "@mantine/core";
+import { useSelector } from "react-redux";
 
 const AnalisisContainer = () => {
 	const categorias = useSelector((state) => state.masters.categories);
