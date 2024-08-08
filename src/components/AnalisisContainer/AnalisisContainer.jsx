@@ -52,14 +52,13 @@ const AnalisisContainer = () => {
 	}, [eventos]);
 
 	const tiempoRestante = useMemo(() => {
-		// const startDate = new Date(ultimoBiberon.replace(" ", "T"));
 		const startDate = new Date(ultimoBiberon).setHours(
 			new Date(ultimoBiberon).getHours() + 4
 		);
 		const endDate = new Date();
 
 		/// Calcular la diferencia en milisegundos
-		const diffMs = endDate - startDate;
+		const diffMs = startDate - endDate;
 
 		// Determinar si la diferencia es negativa
 		const isNegative = diffMs < 0;
@@ -76,6 +75,19 @@ const AnalisisContainer = () => {
 		const formattedMinutes = String(diffMinutes).padStart(2, "0");
 
 		return `${formattedHours}:${formattedMinutes}`;
+	}, [ultimoBiberon]);
+
+	const pasadoDeTiempo = useMemo(() => {
+		const startDate = new Date(ultimoBiberon).setHours(
+			new Date(ultimoBiberon).getHours() + 4
+		);
+		const endDate = new Date();
+
+		/// Calcular la diferencia en milisegundos
+		const diffMs = startDate - endDate;
+
+		// Determinar si la diferencia es negativa
+		return diffMs < 0;
 	}, [ultimoBiberon]);
 
 	return (
@@ -164,7 +176,11 @@ const AnalisisContainer = () => {
 							}}
 						>
 							<h3>Tiempo para el próximo biberón</h3>
-							<Badge color="teal" radius="md" size="100px">
+							<Badge
+								color={pasadoDeTiempo ? "red" : "teal"}
+								radius="md"
+								size="100px"
+							>
 								{tiempoRestante}
 							</Badge>
 						</div>
