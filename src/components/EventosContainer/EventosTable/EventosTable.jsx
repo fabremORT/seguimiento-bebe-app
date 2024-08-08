@@ -12,6 +12,7 @@ const EventosTable = ({eventos, title}) =>{
 							<Table.Th>Categoria</Table.Th>
 							<Table.Th>Detalle</Table.Th>
 							<Table.Th>Fecha</Table.Th>
+							<Table.Th></Table.Th>
 						</Table.Tr>
 					</Table.Thead>
 					<Table.Tbody>

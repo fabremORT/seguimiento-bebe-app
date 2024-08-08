@@ -2,14 +2,18 @@ import { Button, Card, Group, Select, Textarea } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { useSelector } from "react-redux";
+import { useAddEventoMutation } from "../../app/services/babyTrackerAPI";
+import { notifications } from "@mantine/notifications";
+import { useAuth } from "../../hooks/authHook";
 
 const RegistrarEventoContainer = () => {
 	const categorias = useSelector((state) => state.masters.categories);
-
+	const [addEvento] = useAddEventoMutation()
+	const user = useAuth();
 	const form = useForm({
 		initialValues: {
 			fecha: "",
-			detalles: "",
+			detalle: "",
 			idCategoria: 0,
 		},
 
@@ -18,6 +22,28 @@ const RegistrarEventoContainer = () => {
 			idCategoria: (value) => (value ? null : "Debe ingresar una categoria"),
 		},
 	});
+
+	const _handleSubmit = async (values) => {
+		try{
+			values.idUsuario = user.userId
+			const {data, error } = await addEvento(values)
+
+			if(data) {
+				notifications.show({
+					title: data.mensaje,
+					color: "green"
+				})
+			}else {
+				notifications.show({
+					title: error.data.mensaje,
+					color: "red"
+				})
+			}
+
+		}catch (err){
+			console.log(err)
+		}
+	}
 
 	return (
 		<Card
@@ -30,10 +56,12 @@ const RegistrarEventoContainer = () => {
 			}}
 		>
 			<h2>Registrar evento</h2>
-			<form onSubmit={form.onSubmit((values) => console.log(values))}>
+			<form onSubmit={form.onSubmit(_handleSubmit)}>
 				<Select
 					label="Categoria"
 					placeholder="Elija una categoria"
+					key={form.key("idCategoria")}
+					{...form.getInputProps("idCategoria")}
 					data={categorias?.map((cat) => {
 						return { value: cat.id.toString(), label: cat.tipo };
 					})}
@@ -43,8 +71,15 @@ const RegistrarEventoContainer = () => {
 					label="Fecha"
 					placeholder="Elija una fecha"
 					maxDate={new Date()}
+					key={form.key("fecha")}
+					{...form.getInputProps("fecha")}
 				/>
-				<Textarea label="Detalles" placeholder="Ingrese detalles" />
+				<Textarea
+					label="Detalle"
+					placeholder="Ingrese detalle"
+					key={form.key("detalle")}
+					{...form.getInputProps("detalle")}
+				/>
 
 				<Group justify="center" mt="md">
 					<Button type="submit">Registrar</Button>

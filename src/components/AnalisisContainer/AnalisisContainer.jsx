@@ -1,58 +1,40 @@
 import { LineChart, PieChart } from "@mantine/charts";
 import { Badge, Card, Grid } from "@mantine/core";
+import randomColor from "randomcolor";
 import { useSelector } from "react-redux";
 
 const AnalisisContainer = () => {
+	const eventos = useSelector((state) => state.events.events);
 	const categorias = useSelector((state) => state.masters.categories);
 
-	const eventos = [
-		{
-			name: "categoria1",
-			value: 2,
-			color: "indigo.6",
-		},
-		{
-			name: "categoria2",
-			value: 7,
-			color: "yellow.6",
-		},
-		{
-			name: "categoria3",
-			value: 4,
-			color: "gray.6",
-		},
-	];
 
-	const comidas = [
-		{
-			cantidad: 3,
-			date: "30-7-2024",
-		},
-		{
-			cantidad: 2,
-			date: "31-7-2024",
-		},
-		{
-			cantidad: 3,
-			date: "1-8-2024",
-		},
-		{
-			cantidad: 3,
-			date: "2-8-2024",
-		},
-		{
-			cantidad: 4,
-			date: "3-8-2024",
-		},
-		{
-			cantidad: 3,
-			date: "4-8-2024",
-		},
-		{
-			cantidad: 4,
-			date: "5-8-2024",
-		},
-	];
+	const CantidadesCategoria = categorias.map(categoria => {
+		return {
+			name: categoria.tipo,
+			value: eventos.filter(ev => ev.idCategoria === categoria.id).length,
+			color: randomColor({hue:'purple', seed:categoria.id})
+		}
+	})
+
+	const diasComidas = () =>{
+		const hoy = new Date();
+		const result = []
+		for (let i = 6; i >= 0; i--){
+			const dia = new Date();
+			dia.setDate(hoy.getDate()-i)
+
+			result.push({
+				cantidad: eventos.filter(ev => {
+					const fecha = new Date(Date.parse(ev.fecha))
+					return ev.idCategoria === 31 && fecha.getFullYear() === dia.getFullYear() && fecha.getMonth() === dia.getMonth() && fecha.getDate() === dia.getDate()
+				}).length,
+				date: dia.toDateString()
+			})
+		}
+		console.log(result)
+		return result
+	}
+	
 	return (
 		<Card
 			shadow="sm"
@@ -75,7 +57,7 @@ const AnalisisContainer = () => {
 					>
 						<h3>Cantidades por categoria</h3>
 						<PieChart
-							data={eventos}
+							data={CantidadesCategoria.filter(d => d.value != 0)}
 							withTooltip
 							tooltipDataSource="segment"
 							mx="auto"
@@ -97,7 +79,7 @@ const AnalisisContainer = () => {
 						<h3>Comidas en los ultimos 7 dias</h3>
 						<LineChart
 							h={200}
-							data={comidas}
+							data={diasComidas()}
 							dataKey="date"
 							series={[{ name: "cantidad", color: "blue.6" }]}
 							curveType="linear"

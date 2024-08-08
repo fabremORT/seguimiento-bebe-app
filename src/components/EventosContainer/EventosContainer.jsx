@@ -4,6 +4,32 @@ import { useSelector } from "react-redux";
 
 const EventosContainer = () => {
 	const eventos = useSelector((state) => state.events.events);
+	const categorias = useSelector((state) => state.masters.categories);
+
+	const eventosConCategoria = eventos.map(evento => {
+		return {
+			id: evento.id,
+			categoria: categorias.find(cat => cat.id === evento.idCategoria),
+			detalle: evento.detalle,
+			fecha: evento.fecha
+		}
+	})
+
+	const eventosHoy = eventosConCategoria.filter(evento => {
+		const hoy = new Date();
+		const fecha = new Date(Date.parse(evento.fecha))
+		return fecha.getFullYear() === hoy.getFullYear() &&
+           fecha.getMonth() === hoy.getMonth() &&
+           fecha.getDate() === hoy.getDate();
+	})
+
+	const eventosAnteriores = eventosConCategoria.filter(evento => {
+		const hoy = new Date();
+		const fecha = new Date(Date.parse(evento.fecha))
+		hoy.setHours(0,0,0,0)
+		return fecha < hoy
+	})
+	
 
 	return (
 		<Card
@@ -18,14 +44,14 @@ const EventosContainer = () => {
 			<Grid>
 				<Grid.Col span={6}>
 					<EventosTable
-						eventos={eventos}
+						eventos={eventosHoy}
 						title={"Eventos de hoy"}
 					></EventosTable>
 				</Grid.Col>
 				<Grid.Col span={6}>
 					<EventosTable
-						eventos={eventos}
-						title={"Eventos de dias posteriores"}
+						eventos={eventosAnteriores}
+						title={"Eventos de dias anteriores"}
 					></EventosTable>
 				</Grid.Col>
 			</Grid>
