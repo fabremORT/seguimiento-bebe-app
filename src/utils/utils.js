@@ -7,3 +7,16 @@ export const formatDateToYYYYMMDDHHMM = (date) => {
 
 	return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
+
+export const formatDateToDayAndDate = (date) => {
+	// Array de nombres de días de la semana en español
+	const daysOfWeek = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+
+	// Obtener el nombre del día de la semana
+	const dayOfWeek = daysOfWeek[date.getDay()];
+
+	// Obtener el día del mes
+	const dayOfMonth = date.getDate();
+
+	return `${dayOfWeek} ${dayOfMonth}`;
+};

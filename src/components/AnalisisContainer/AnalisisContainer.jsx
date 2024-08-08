@@ -4,6 +4,7 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import randomColor from "randomcolor";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
+import { formatDateToDayAndDate } from "../../utils/utils";
 
 const AnalisisContainer = () => {
 	const eventos = useSelector((state) => state.events.events);
@@ -34,7 +35,7 @@ const AnalisisContainer = () => {
 						fecha.getDate() === dia.getDate()
 					);
 				}).length,
-				date: dia.toDateString(),
+				date: formatDateToDayAndDate(dia),
 			});
 		}
 		return result;
