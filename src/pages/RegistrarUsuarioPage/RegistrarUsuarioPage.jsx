@@ -170,7 +170,9 @@ const RegistrarUsuarioPage = () => {
 					/>
 
 					<Group justify="center" mt="md">
-						<Button type="submit">Registrar</Button>
+						<Button type="submit" loading={isLoadingRegisterUser}>
+							Registrar
+						</Button>
 					</Group>
 				</form>
 			</Card>

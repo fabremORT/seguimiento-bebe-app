@@ -3,6 +3,7 @@ import {
 	AppShell,
 	Group,
 	LoadingOverlay,
+	Space,
 	Text,
 	Title,
 	Tooltip,
@@ -59,8 +60,11 @@ export function Dashboard() {
 					overlayProps={{ radius: "sm", blur: 2 }}
 				/>
 				<RegistrarEventoContainer />
+				<Space h="md" />
 				<EventosContainer />
+				<Space h="md" />
 				<InformeEventos />
+				<Space h="md" />
 				<AnalisisContainer />
 			</AppShell.Main>
 		</AppShell>

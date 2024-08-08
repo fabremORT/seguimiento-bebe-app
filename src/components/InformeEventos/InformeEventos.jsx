@@ -1,4 +1,4 @@
-import { Card, Stack, Text, Title } from "@mantine/core";
+import { Card, Space, Stack, Text, Title } from "@mantine/core";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
@@ -46,6 +46,7 @@ const InformeEventos = () => {
 	return (
 		<Card shadow="sm" padding="lg" radius="md" withBorder>
 			<Title order={2}>Informe de Eventos</Title>
+			<Space h="md" />
 			<Card shadow="sm" padding="lg" radius="md" withBorder>
 				<h2>Biberones</h2>
 				<Stack>
@@ -55,6 +56,7 @@ const InformeEventos = () => {
 					<Text>{ultimoBiberon}</Text>
 				</Stack>
 			</Card>
+			<Space h="md" />
 			<Card shadow="sm" padding="lg" radius="md" withBorder>
 				<h2>Pañales</h2>
 				<Stack>
