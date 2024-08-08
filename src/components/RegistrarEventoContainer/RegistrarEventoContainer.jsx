@@ -5,10 +5,11 @@ import { useSelector } from "react-redux";
 import { useAddEventoMutation } from "../../app/services/babyTrackerAPI";
 import { notifications } from "@mantine/notifications";
 import { useAuth } from "../../hooks/authHook";
+import { formatDateToYYYYMMDDHHMM } from "../../utils/utils";
 
 const RegistrarEventoContainer = () => {
 	const categorias = useSelector((state) => state.masters.categories);
-	const [addEvento] = useAddEventoMutation()
+	const [addEvento, { isLoading: isLoadingAddEvento }] = useAddEventoMutation();
 	const user = useAuth();
 	const form = useForm({
 		initialValues: {
@@ -24,26 +25,27 @@ const RegistrarEventoContainer = () => {
 	});
 
 	const _handleSubmit = async (values) => {
-		try{
-			values.idUsuario = user.userId
-			const {data, error } = await addEvento(values)
+		try {
+			const dataToSend = { ...values };
+			dataToSend.idUsuario = user.userId;
+			dataToSend.fecha = formatDateToYYYYMMDDHHMM(values.fecha);
+			const { data, error } = await addEvento(dataToSend);
 
-			if(data) {
+			if (data) {
 				notifications.show({
 					title: data.mensaje,
-					color: "green"
-				})
-			}else {
+					color: "green",
+				});
+			} else {
 				notifications.show({
 					title: error.data.mensaje,
-					color: "red"
-				})
+					color: "red",
+				});
 			}
-
-		}catch (err){
-			console.log(err)
+		} catch (err) {
+			console.log(err);
 		}
-	}
+	};
 
 	return (
 		<Card
@@ -82,7 +84,9 @@ const RegistrarEventoContainer = () => {
 				/>
 
 				<Group justify="center" mt="md">
-					<Button type="submit">Registrar</Button>
+					<Button type="submit" loading={isLoadingAddEvento}>
+						Registrar
+					</Button>
 				</Group>
 			</form>
 		</Card>
