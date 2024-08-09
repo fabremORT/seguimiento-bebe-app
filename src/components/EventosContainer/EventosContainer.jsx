@@ -37,15 +37,7 @@ const EventosContainer = () => {
 	});
 
 	return (
-		<Card
-			shadow="sm"
-			padding="lg"
-			radius="md"
-			withBorder
-			style={{
-				height: 400,
-			}}
-		>
+		<Card shadow="sm" padding="lg" radius="md" withBorder>
 			<Grid>
 				<Grid.Col span={6}>
 					<EventosTable

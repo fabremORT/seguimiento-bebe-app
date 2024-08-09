@@ -15,7 +15,7 @@ const EventosTable = ({ eventos, title }) => {
 				></Alert>
 			) : (
 				<Table.ScrollContainer h={"300"}>
-					<Table withTableBorder>
+					<Table stickyHeader stickyHeaderOffset={-1} withTableBorder>
 						<Table.Thead>
 							<Table.Tr>
 								<Table.Th>Categoria</Table.Th>

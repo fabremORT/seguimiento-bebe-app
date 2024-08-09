@@ -1,4 +1,13 @@
-import { Card, Space, Stack, Text, Title } from "@mantine/core";
+import {
+	Badge,
+	Card,
+	Grid,
+	Group,
+	Space,
+	Stack,
+	Text,
+	Title,
+} from "@mantine/core";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
@@ -47,29 +56,50 @@ const InformeEventos = () => {
 		<Card shadow="sm" padding="lg" radius="md" withBorder>
 			<Title order={2}>Informe de Eventos</Title>
 			<Space h="md" />
-			<Card shadow="sm" padding="lg" radius="md" withBorder>
-				<h2>Biberones</h2>
-				<Stack>
-					<Text fw={500}>Ingeridos en el dia: </Text>
-					<Text>{ingeridosHoy}</Text>
-					<Text fw={500}>Ultimo biberon: </Text>
-					<Text>{ultimoBiberon}</Text>
-				</Stack>
-			</Card>
-			<Space h="md" />
-			<Card shadow="sm" padding="lg" radius="md" withBorder>
-				<h2>Pañales</h2>
-				<Stack>
-					<Text span fw={500}>
-						Cambiados en el dia:{" "}
-					</Text>
-					<Text>{cambiadosHoy}</Text>
-					<Text span fw={500}>
-						Ultimo cambio:{" "}
-					</Text>
-					<Text>{ultimoCambio}</Text>
-				</Stack>
-			</Card>
+			<Grid>
+				<Grid.Col span={6}>
+					<Card shadow="sm" padding="lg" radius="md" withBorder>
+						<h2>Biberones</h2>
+						<Stack>
+							<Badge color="cyan.4">
+								<Group>
+									<Text fw={500}>Ingeridos en el dia: </Text>
+									<Text>{ingeridosHoy}</Text>
+								</Group>
+							</Badge>
+							<Badge color="cyan.4">
+								<Group>
+									<Text fw={500}>Ultimo biberon: </Text>
+									<Text>{ultimoBiberon}</Text>
+								</Group>
+							</Badge>
+						</Stack>
+					</Card>
+				</Grid.Col>
+				<Grid.Col span={6}>
+					<Card shadow="sm" padding="lg" radius="md" withBorder>
+						<h2>Pañales</h2>
+						<Stack>
+							<Badge color="yellow.4">
+								<Group>
+									<Text span fw={500}>
+										Cambiados en el dia:{" "}
+									</Text>
+									<Text>{cambiadosHoy}</Text>
+								</Group>
+							</Badge>
+							<Badge color="yellow.4">
+								<Group>
+									<Text span fw={500}>
+										Ultimo cambio:{" "}
+									</Text>
+									<Text>{ultimoCambio}</Text>
+								</Group>
+							</Badge>
+						</Stack>
+					</Card>
+				</Grid.Col>
+			</Grid>
 		</Card>
 	);
 };
