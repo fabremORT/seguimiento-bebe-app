@@ -53,7 +53,7 @@ export function Dashboard() {
 					</Tooltip>
 				</Group>
 			</AppShell.Header>
-			<AppShell.Main>
+			<AppShell.Main style={{ justifyContent: "center" }}>
 				<LoadingOverlay
 					visible={isLoading}
 					zIndex={1000}

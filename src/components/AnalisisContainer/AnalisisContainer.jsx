@@ -14,7 +14,7 @@ const AnalisisContainer = () => {
 		return {
 			name: categoria.tipo,
 			value: eventos.filter((ev) => ev.idCategoria === categoria.id).length,
-			color: randomColor({ hue: "purple", seed: categoria.id }),
+			color: randomColor({ seed: categoria.id }),
 		};
 	});
 

@@ -7,6 +7,10 @@ import { notifications } from "@mantine/notifications";
 import { useAuth } from "../../hooks/authHook";
 import { formatDateToYYYYMMDDHHMM } from "../../utils/utils";
 
+const RegistrarEventoCardStyles = {
+	width: "50%",
+};
+
 const RegistrarEventoContainer = () => {
 	const categorias = useSelector((state) => state.masters.categories);
 	const [addEvento, { isLoading: isLoadingAddEvento }] = useAddEventoMutation();
@@ -53,9 +57,7 @@ const RegistrarEventoContainer = () => {
 			padding="lg"
 			radius="md"
 			withBorder
-			style={{
-				height: 400,
-			}}
+			style={RegistrarEventoCardStyles}
 		>
 			<h2>Registrar evento</h2>
 			<form onSubmit={form.onSubmit(_handleSubmit)}>
