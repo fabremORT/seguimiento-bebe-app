@@ -78,7 +78,7 @@ export const babyTrackerApi = createApi({
 		deleteEvento: builder.mutation({
 			query(eventId) {
 				return {
-					url: `?idEvento=${eventId}`,
+					url: `eventos.php?idEvento=${eventId}`,
 					method: "DELETE",
 				};
 			},
