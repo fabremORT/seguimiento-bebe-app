@@ -4,6 +4,7 @@ import {
 	Group,
 	LoadingOverlay,
 	Select,
+	Space,
 	TextInput,
 	Title,
 } from "@mantine/core";
@@ -101,7 +102,7 @@ const RegistrarUsuarioPage = () => {
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
-				backgroundColor: "aliceblue",
+				backgroundColor: "#FFECD6",
 			}}
 		>
 			<Card
@@ -111,16 +112,15 @@ const RegistrarUsuarioPage = () => {
 				withBorder
 				style={LoginCardStyles}
 			>
+				<Card.Section withBorder inheritPadding className="cardHeader">
+					<h2>Registro de Usuario</h2>
+				</Card.Section>
+				<Space h={'md'}></Space>
 				<LoadingOverlay
 					visible={isLoadingDeptos || isLoadingCiudades}
 					zIndex={1000}
 					overlayProps={{ radius: "sm", blur: 2 }}
 				/>
-				<Group justify="center">
-					<Title order={2} style={{ textAlign: "center" }}>
-						Registro de Usuario
-					</Title>
-				</Group>
 				<form onSubmit={form.onSubmit(_handleUserSubmit)} style={FormStyles}>
 					<TextInput
 						withAsterisk

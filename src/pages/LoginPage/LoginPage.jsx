@@ -1,4 +1,4 @@
-import { Button, Card, Group, Stack, TextInput } from "@mantine/core";
+import { Button, Card, Group, Space, Stack, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
 import { setCredentials } from "../../features/auth/authSlice";
@@ -63,7 +63,7 @@ const LoginPage = () => {
 				display: "flex",
 				justifyContent: "center",
 				alignItems: "center",
-				backgroundColor: "aliceblue",
+				backgroundColor: "#FFECD6",
 			}}
 		>
 			<Card
@@ -73,6 +73,10 @@ const LoginPage = () => {
 				withBorder
 				style={LoginCardStyles}
 			>
+				<Card.Section withBorder inheritPadding className="cardHeader">
+				<h2>Iniciar sesión</h2>
+			</Card.Section>
+			<Space h={'md'}></Space>
 				<form
 					onSubmit={form.onSubmit((values) => _handleLogin(values))}
 					style={FormStyles}

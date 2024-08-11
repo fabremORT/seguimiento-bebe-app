@@ -1,4 +1,4 @@
-import { Button, Card, Group, Select, Textarea } from "@mantine/core";
+import { Button, Card, Group, Select, Space, Textarea } from "@mantine/core";
 import { DateInput } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { useSelector } from "react-redux";
@@ -8,7 +8,7 @@ import { useAuth } from "../../hooks/authHook";
 import { formatDateToYYYYMMDDHHMM } from "../../utils/utils";
 
 const RegistrarEventoCardStyles = {
-	width: "50%",
+	height: '420px'
 };
 
 const RegistrarEventoContainer = () => {
@@ -19,7 +19,7 @@ const RegistrarEventoContainer = () => {
 		initialValues: {
 			fecha: "",
 			detalle: "",
-			idCategoria: 0,
+			idCategoria: null,
 		},
 
 		validate: {
@@ -36,6 +36,7 @@ const RegistrarEventoContainer = () => {
 			const { data, error } = await addEvento(dataToSend);
 
 			if (data) {
+				form.reset()
 				notifications.show({
 					title: data.mensaje,
 					color: "green",
@@ -54,12 +55,15 @@ const RegistrarEventoContainer = () => {
 	return (
 		<Card
 			shadow="sm"
-			padding="lg"
+			padding="md"
 			radius="md"
 			withBorder
 			style={RegistrarEventoCardStyles}
 		>
-			<h2>Registrar evento</h2>
+			<Card.Section withBorder inheritPadding className="cardHeader">
+				<h2>Registrar evento</h2>
+			</Card.Section>
+			<Space h={'md'}></Space>
 			<form onSubmit={form.onSubmit(_handleSubmit)}>
 				<Select
 					label="Categoria"
@@ -85,8 +89,9 @@ const RegistrarEventoContainer = () => {
 					{...form.getInputProps("detalle")}
 				/>
 
+				<Space h='xl'></Space>
 				<Group justify="center" mt="md">
-					<Button type="submit" loading={isLoadingAddEvento}>
+					<Button type="submit" loading={isLoadingAddEvento} bg={"blue"}>
 						Registrar
 					</Button>
 				</Group>

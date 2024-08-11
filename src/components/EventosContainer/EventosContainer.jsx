@@ -17,7 +17,9 @@ const EventosContainer = () => {
 				fecha: evento.fecha,
 			};
 		}
-	});
+	}).sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+
 
 	const eventosHoy = eventosConCategoria.filter((evento) => {
 		const hoy = new Date();
@@ -38,17 +40,20 @@ const EventosContainer = () => {
 
 	return (
 		<Card shadow="sm" padding="lg" radius="md" withBorder>
+			<Card.Section withBorder inheritPadding className="cardHeader">
+				<h2>Lista de eventos</h2>
+			</Card.Section>
 			<Grid>
 				<Grid.Col span={6}>
 					<EventosTable
 						eventos={eventosHoy}
-						title={"Eventos de hoy"}
+						title={"Hoy"}
 					></EventosTable>
 				</Grid.Col>
 				<Grid.Col span={6}>
 					<EventosTable
 						eventos={eventosAnteriores}
-						title={"Eventos de dias anteriores"}
+						title={"Anteriores"}
 					></EventosTable>
 				</Grid.Col>
 			</Grid>

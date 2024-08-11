@@ -26,7 +26,7 @@ const AnalisisContainer = () => {
 			dia.setDate(hoy.getDate() - i);
 
 			result.push({
-				cantidad: eventos.filter((ev) => {
+				Cantidad: eventos.filter((ev) => {
 					const fecha = new Date(Date.parse(ev.fecha));
 					return (
 						ev.idCategoria === 31 &&
@@ -100,7 +100,9 @@ const AnalisisContainer = () => {
 				height: 400,
 			}}
 		>
-			<h2>Analisis</h2>
+			<Card.Section withBorder inheritPadding className="cardHeader">
+				<h2>Analisis</h2>
+			</Card.Section>
 			<Grid>
 				<Grid.Col span={4}>
 					{!eventos.length ? (
@@ -153,7 +155,7 @@ const AnalisisContainer = () => {
 								h={200}
 								data={diasComidas()}
 								dataKey="date"
-								series={[{ name: "cantidad", color: "blue.6" }]}
+								series={[{ name: "Cantidad", color: "blue.6" }]}
 								curveType="linear"
 							/>
 						</div>

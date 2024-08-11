@@ -1,6 +1,7 @@
 import {
 	ActionIcon,
 	AppShell,
+	Grid,
 	Group,
 	LoadingOverlay,
 	Space,
@@ -37,14 +38,14 @@ export function Dashboard() {
 	}, [data, dispatch]);
 
 	return (
-		<AppShell header={{ height: 60 }} padding="md" mah={"100%"}>
-			<AppShell.Header>
+		<AppShell header={{ height: 60}} padding="md" mah={"100%"}>
+			<AppShell.Header style={{backgroundColor:'#4CB9E7', color: 'white'}}>
 				<Group h="100%" px="md" justify="space-between">
 					<Title order={1}>Baby Tracker</Title>
 					<Tooltip label="Cerrar sesion">
 						<ActionIcon
 							variant="subtle"
-							color="gray"
+							color="white"
 							radius="xs"
 							onClick={_handleLogout}
 						>
@@ -53,15 +54,20 @@ export function Dashboard() {
 					</Tooltip>
 				</Group>
 			</AppShell.Header>
-			<AppShell.Main style={{ justifyContent: "center" }}>
+			<AppShell.Main style={{ justifyContent: "center", backgroundColor: '#FFECD6' }}>
 				<LoadingOverlay
 					visible={isLoading}
 					zIndex={1000}
 					overlayProps={{ radius: "sm", blur: 2 }}
 				/>
-				<RegistrarEventoContainer />
-				<Space h="md" />
-				<EventosContainer />
+				<Grid>
+					<Grid.Col span={3}>
+						<RegistrarEventoContainer />
+					</Grid.Col>
+					<Grid.Col span={9}>
+						<EventosContainer />
+					</Grid.Col>
+				</Grid>
 				<Space h="md" />
 				<InformeEventos />
 				<Space h="md" />

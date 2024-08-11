@@ -54,7 +54,9 @@ const InformeEventos = () => {
 
 	return (
 		<Card shadow="sm" padding="lg" radius="md" withBorder>
-			<Title order={2}>Informe de Eventos</Title>
+			<Card.Section withBorder inheritPadding className="cardHeader">
+				<h2>Informe de Eventos</h2>
+			</Card.Section>
 			<Space h="md" />
 			<Grid>
 				<Grid.Col span={6}>

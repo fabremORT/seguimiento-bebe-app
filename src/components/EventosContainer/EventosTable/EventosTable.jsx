@@ -1,11 +1,11 @@
-import { Alert, Table } from "@mantine/core";
+import { Alert, Space, Table, Title } from "@mantine/core";
 import EventoRow from "./EventoRow";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 const EventosTable = ({ eventos, title }) => {
 	return (
 		<div>
-			<h2>{title}</h2>
+			<Title size={'h3'} style={{padding: '5px'}}>{title}</Title>
 			{!eventos.length ? (
 				<Alert
 					variant="light"
